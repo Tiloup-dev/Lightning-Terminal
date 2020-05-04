@@ -36,7 +36,7 @@ namespace Lightning
                 if (Directory.Exists(envpath))
                     environmentpath = envpath;
                 else
-                    throw new Exception("Not a valid path");
+                    throw new Exception("Not a valid path!");
             }
             else
             {
@@ -61,6 +61,8 @@ namespace Lightning
                 "resetcolor                            Resets the terminal's color.",
                 "new                                   Resets the Lightning Terminal.",
                 "exit                                  Exits the current Lightning Terminal.",
+                "in keyboard(:<Message> Optional)      Inputs the default variable IN to the input entered by the user. You can also define it by using (:).",
+                "in key(:<Key> Optional)               Inputs the default variable IN to the key pressed by the user. You can also define it by using (:).",
                 "If the command entered is not defined, it will search to execute a file named so. To execute a file in the current directory, use .\\ at start."
             };
 
@@ -88,6 +90,8 @@ namespace Lightning
             Color OLDbackground = Console.BackgroundColor;
             Color newforeground = Data.INPUT_COLOR;
             Color newbackground = Console.BackgroundColor;
+
+            object in_ = null;
             while (true)
             {
                 Console.ResetColor();
@@ -131,12 +135,44 @@ namespace Lightning
                         string toWrite = input.Substring(pointer);
                         Console.WriteLine(toWrite);
                     }
+                    else if (input.Contains("user"))
+                    {
+                        Console.WriteLine(in_);
+                    }
                     else
                     {
                         Color previous = Console.ForegroundColor;
                         Console.ForegroundColor = Data.ERROR_COLOR;
                         Console.WriteLine($"Incorrect usage for echo.\n(Full String):'{input}'");
                         Console.ForegroundColor = previous;
+                    }
+                }
+                else if (input.StartsWith("in"))
+                {
+                    int pointer = input.IndexOf('n') + 2;
+                    string item = input.Substring(pointer);
+                    item.TrimStart();
+                    item.TrimEnd();
+                    item.ToLower();
+                    if (item.StartsWith("keyboard"))
+                    {
+                        if (item.Contains(":"))
+                        {
+                            int pointer2 = item.IndexOf(':') + 1;
+                            in_ = item.Substring(pointer2);
+                        }
+                        else
+                            in_ = Console.ReadLine();
+                    }
+                    else if (item.StartsWith("key"))
+                    {
+                        if (item.Contains(":"))
+                        {
+                            int pointer2 = item.IndexOf(':') + 1;
+                            in_ = item[pointer2];
+                        }
+                        else
+                            in_ = Console.ReadKey().KeyChar;
                     }
                 }
                 else if (input.StartsWith("cd") && !input.Contains("cdir"))

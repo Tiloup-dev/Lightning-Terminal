@@ -17,6 +17,9 @@
     <Reference Include="Colorful.Console">
       <HintPath>bin\Debug\netcoreapp3.1\Colorful.Console.dll</HintPath>
     </Reference>
+    <Reference Include="ConsoleGameEngine">
+      <HintPath>..\..\Game in console\Game in console\ConsoleGameEngine.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
