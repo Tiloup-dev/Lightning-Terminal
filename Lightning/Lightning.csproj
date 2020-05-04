@@ -9,4 +9,14 @@
     <PackageReference Include="Colorful.Console" Version="1.2.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Lightning_Data\Lightning_Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Colorful.Console">
+      <HintPath>bin\Debug\netcoreapp3.1\Colorful.Console.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

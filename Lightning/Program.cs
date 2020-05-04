@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Colorful;
+using Lightning_Data;
 using Console = Colorful.Console;
 
 namespace Lightning
@@ -83,16 +84,16 @@ namespace Lightning
             Console.WriteLine("Welcome to the Lightning Terminal!\n");
             Console.WriteLine($"Running on {os}, Path:'{@environmentpath}'");
             Console.ResetColor();
-            Color OLDforeground = Console.ForegroundColor;
+            Color OLDforeground = Data.INPUT_COLOR;
             Color OLDbackground = Console.BackgroundColor;
-            Color newforeground = Console.ForegroundColor;
+            Color newforeground = Data.INPUT_COLOR;
             Color newbackground = Console.BackgroundColor;
             while (true)
             {
                 Console.ResetColor();
                 Console.BackgroundColor = newbackground;
                 Console.Title = @environmentpath + "$";
-                Console.ForegroundColor = Color.SpringGreen;
+                Console.ForegroundColor = Data.PATH_COLOR;
                 Console.Write($"[{@environmentpath}]");
                 Console.ForegroundColor = Color.Yellow;
                 Console.Write("$ ");
@@ -133,7 +134,7 @@ namespace Lightning
                     else
                     {
                         Color previous = Console.ForegroundColor;
-                        Console.ForegroundColor = Color.Red;
+                        Console.ForegroundColor = Data.ERROR_COLOR;
                         Console.WriteLine($"Incorrect usage for echo.\n(Full String):'{input}'");
                         Console.ForegroundColor = previous;
                     }
@@ -182,7 +183,7 @@ namespace Lightning
                             else
                             {
                                 Color previous = Console.ForegroundColor;
-                                Console.ForegroundColor = Color.Red;
+                                Console.ForegroundColor = Data.ERROR_COLOR;
                                 Console.WriteLine($"Incorrect usage for cd. (Full command):'{input}'");
                                 Console.ForegroundColor = previous;
                             }
@@ -368,7 +369,7 @@ namespace Lightning
                     catch
                     {
                         Color previous = Console.ForegroundColor;
-                        Console.ForegroundColor = Color.Red;
+                        Console.ForegroundColor = Data.ERROR_COLOR;
                         Console.WriteLine($"'{input}' is not recognized as a command, script file, applet or runnable application.");
                         Console.ForegroundColor = previous;
                     }
