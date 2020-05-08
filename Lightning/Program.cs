@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Colorful;
@@ -146,6 +147,55 @@ namespace Lightning
                         Console.WriteLine($"Incorrect usage for echo.\n(Full String):'{input}'");
                         Console.ForegroundColor = previous;
                     }
+                }
+                else if (input.StartsWith("scvg-dumpbin"))
+                {
+                    int pointer = input.IndexOf('n') + 2;
+                    int pointer2 = input.IndexOf(',');
+                    string filename = input.Substring(pointer, pointer2 - pointer);
+                    if (File.Exists(filename))
+                    {
+                        byte[] file = File.ReadAllBytes(filename);
+                        string dumpFile = input.Substring(pointer2 + 2);
+                        File.WriteAllBytes(dumpFile, file);
+                    }
+                    else
+                        Console.WriteLine("Scavenger: No file found!");
+                }
+                else if (input.StartsWith("scvg-dumpfile"))
+                {
+                    int pointer = input.IndexOf('e') + 2;
+                    int pointer2 = input.IndexOf(',');
+                    string filename = input.Substring(pointer, pointer2 - pointer);
+                    if (File.Exists(filename))
+                    {
+                        byte[] file = File.ReadAllBytes(filename);
+                        string dumpFile = input.Substring(pointer2 + 2);
+                        List<string> output = new List<string>();
+                        foreach (byte b in file)
+                        {
+                            output.Add(Convert.ToString(b));
+                        }
+                        File.WriteAllLines(dumpFile, output.ToArray());
+                    }
+                    else
+                        Console.WriteLine("Scavenger: No file found!");
+                }
+                else if (input.StartsWith("scvg"))
+                {
+                    int pointer = input.IndexOf('g') + 2;
+                    string filename = input.Substring(pointer);
+                    if (File.Exists(filename))
+                    {
+                        byte[] file = File.ReadAllBytes(filename);
+                        foreach (byte b in file)
+                        {
+                            Console.Write(b + "\t");
+                        }
+                        Console.WriteLine();
+                    }
+                    else
+                        Console.WriteLine("Scavenger: No file found!");
                 }
                 else if (input.StartsWith("in"))
                 {
